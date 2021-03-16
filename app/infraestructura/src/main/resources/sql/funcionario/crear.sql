@@ -1,0 +1,1 @@
+insert into funcionario (nombre, cedula,salario,fechaNacimiento,fechaIngreso) values (:nombre, :cedula, :salario, :fechaNacimiento, :fechaIngreso)

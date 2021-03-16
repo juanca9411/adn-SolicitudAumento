@@ -1,0 +1,1 @@
+select max(fechaSolicitud) from solicitud where idFuncionario= :idFuncionario

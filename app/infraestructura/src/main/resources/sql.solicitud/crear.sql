@@ -1,0 +1,1 @@
+insert into solicitud (idFuncionario, fechaSolicitud, justificacion, estado, respuesta) values (:idFuncionario, :fechaSolicitud, :justificacion, :estado, :respuesta)
