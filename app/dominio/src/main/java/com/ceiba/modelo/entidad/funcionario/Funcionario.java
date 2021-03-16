@@ -10,11 +10,10 @@ import lombok.Setter;
 import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
 import static com.ceiba.props.funcionario.ConstatesFuncionario.*;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 
 
@@ -36,10 +35,10 @@ public class Funcionario {
     private String nombre;
     private String cedula;
     private Double salario;
-    private Date fechaNacimiento;
-    private Date fechaIngreso;
+    private LocalDateTime fechaNacimiento;
+    private LocalDateTime fechaIngreso;
 
-    public Funcionario(Long idFuncionario, String nombre, String cedula, Double salario, Date fechaNacimiento, Date fechaIngreso) {
+    public Funcionario(Long idFuncionario, String nombre, String cedula, Double salario, LocalDateTime fechaNacimiento, LocalDateTime fechaIngreso) {
 
         validarObligatorio(nombre, SE_DEBE_INGRESAR_EL_NOMBRE_DEL_FUNCIONARIO);
         validarObligatorio(cedula, SE_DEBE_INGRESAR_LA_CEDULA);
@@ -55,16 +54,15 @@ public class Funcionario {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public static Double aumentarSalario(Date fechaIngreso, Double salario){
+    public static Double aumentarSalario(LocalDateTime fechaIngreso, Double salario){
         validarAntiguedadFuncionario(fechaIngreso);
         validarCantidadSalariosMinimos(salario);
         return  salario * (PORCENTAJE_AUMENTO_SALARIO/100D) +salario;
     }
 
-    public static void validarFuncionarioMayorDeEdad (Date date){
+    public static void validarFuncionarioMayorDeEdad (LocalDateTime date){
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaTexto = formatter.format(date);
+        String fechaTexto = date.format(fmt);
         LocalDate fechaNac = LocalDate.parse(fechaTexto, fmt);
         LocalDate currentDate = LocalDate.now();
         Period periodo = Period.between(fechaNac, currentDate);
@@ -73,10 +71,9 @@ public class Funcionario {
         }
     }
 
-    public static void validarAntiguedadFuncionario(Date fechaIngreso){
+    public static void validarAntiguedadFuncionario(LocalDateTime fechaIngreso){
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaTexto = formatter.format(fechaIngreso);
+        String fechaTexto = fechaIngreso.format(fmt);
         LocalDate fechaNac = LocalDate.parse(fechaTexto, fmt);
         LocalDate currentDate = LocalDate.now();
         Period periodo = Period.between(fechaNac, currentDate);

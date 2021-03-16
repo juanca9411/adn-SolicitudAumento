@@ -2,7 +2,7 @@ package com.ceiba.modelo.dto.funcionario;
 
 import lombok.Getter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 public class DtoFuncionario {
@@ -10,10 +10,10 @@ public class DtoFuncionario {
     private String nombre;
     private String cedula;
     private Double salario;
-    private Date fechaNacimiento;
-    private Date fechaIngreso;
+    private LocalDateTime fechaNacimiento;
+    private LocalDateTime fechaIngreso;
 
-    public DtoFuncionario(Long idFuncionario, String nombre, String cedula, Double salario, Date fechaNacimiento, Date fechaIngreso) {
+    public DtoFuncionario(Long idFuncionario, String nombre, String cedula, Double salario, LocalDateTime fechaNacimiento, LocalDateTime fechaIngreso) {
         this.idFuncionario = idFuncionario;
         this.nombre = nombre;
         this.cedula = cedula;

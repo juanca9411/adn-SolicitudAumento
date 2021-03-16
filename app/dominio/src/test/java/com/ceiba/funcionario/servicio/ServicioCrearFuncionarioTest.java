@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -39,7 +39,7 @@ public class ServicioCrearFuncionarioTest {
 
         // arange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
-                .conFechaNacimiento(new Date("December 17, 2015 03:24:00"))
+                .conFechaNacimiento(LocalDateTime.of(2015,12,17,3,24))
                 .build();
         ServicioCrearFuncionario servicioCrearFuncionario = new ServicioCrearFuncionario(this.repositorioFuncionario);
 

@@ -22,15 +22,17 @@ pipeline {
       steps{
         echo "------------>Checkout<------------"
         checkout(
-        [$class: 'GitSCM', 
-        branches: [[name: '*/master']], 
+        [$class: 'GitSCM',
+        branches: [[name: '*/master']],
         extensions: [],
         gitTool: 'Default',
-        userRemoteConfigs: [[credentialsId: 'GITHUB_juanca9411', url: 'https://github.com/juanca9411/adn.git']]])
+        submoduleCfg: [],
+        userRemoteConfigs: [[credentialsId: 'GITHUB_juanca9411', url: 'https://github.com/juanca9411/adn-SolicitudAumento.git']]])
+
+        sh 'gradle --b ./app/build.gradle clean'
       }
-      sh 'gradle --b ./app/build.gradle clean'
     }
-    
+
     stage('Compile & Unit Tests') {
       steps{
         echo "------------>Unit Tests<------------"
@@ -53,7 +55,7 @@ sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallat
         echo "------------>Build<------------"
         sh 'gradle --b ./app/build.gradle build -x test'
       }
-    }  
+    }
   }
 
   post {
@@ -62,7 +64,7 @@ sh "${tool name: 'SonarScanner', type:'hudson.plugins.sonar.SonarRunnerInstallat
     }
     success {
       echo 'This will run only if successful'
-      
+
     }
     failure {
       echo 'This will run only if failed'

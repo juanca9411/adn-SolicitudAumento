@@ -3,13 +3,13 @@ package com.ceiba.solicitud.servicio.testdatabuilder;
 
 import com.ceiba.comando.ComandoSolicitud;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class ComandoSolicitudTestDataBuilder {
 
     private Long idFuncionario;
     private Long numSolicitud;
-    private Date fechaSolicitud;
+    private LocalDateTime fechaSolicitud;
     private String justificacion;
     private String estado;
     private String respuesta;
@@ -18,7 +18,7 @@ public class ComandoSolicitudTestDataBuilder {
     public ComandoSolicitudTestDataBuilder() {
         idFuncionario = 1L;
         numSolicitud = 1L;
-        fechaSolicitud = new Date("December 18, 2020 03:24:00");
+        fechaSolicitud = LocalDateTime.of(2020,12,18,3,25);
         justificacion = "Solicito aumento";
         estado = "enviado";
         respuesta = "";
@@ -34,7 +34,7 @@ public class ComandoSolicitudTestDataBuilder {
         return this;
     }
     
-     public ComandoSolicitudTestDataBuilder conFechSolicitud(Date fechaSolicitud) {
+     public ComandoSolicitudTestDataBuilder conFechSolicitud(LocalDateTime fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
         return this;
     }

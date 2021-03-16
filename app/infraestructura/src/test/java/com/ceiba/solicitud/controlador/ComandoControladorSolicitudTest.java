@@ -5,7 +5,6 @@ import com.ceiba.comando.ComandoSolicitud;
 import com.ceiba.controlador.solicitud.ComandoControladorSolicitud;
 import com.ceiba.solicitud.servicio.testdatabuilder.ComandoSolicitudTestDataBuilder;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.PutMapping;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -38,8 +35,8 @@ public class ComandoControladorSolicitudTest {
     public void crear() throws Exception{
         // arrange
         ComandoSolicitud solicitud = new ComandoSolicitudTestDataBuilder()
-                .conNumSolicitud(2l)
-                .conFechSolicitud(new Date("January 13, 2021 03:24:00"))
+                .conNumSolicitud(2L)
+                .conFechSolicitud(LocalDateTime.of(2021,1,13,3,25))
                 .build();
 
         // act - assert
@@ -53,7 +50,7 @@ public class ComandoControladorSolicitudTest {
     public void resolver() throws  Exception{
         //arragne
         ComandoSolicitud solicitud = new ComandoSolicitudTestDataBuilder().build();
-        Long idFuncionario=1l;
+        Long idFuncionario=1L;
         //act-assert
         mocMvc.perform(put("/solicitudes/{idFuncionario}",idFuncionario)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,7 +17,7 @@ public class ComandoFuncionario{
     private String nombre;
     private String cedula;
     private Double salario;
-    private Date fechaNacimiento;
-    private Date fechaIngreso;
+    private LocalDateTime fechaNacimiento;
+    private LocalDateTime fechaIngreso;
 
 }

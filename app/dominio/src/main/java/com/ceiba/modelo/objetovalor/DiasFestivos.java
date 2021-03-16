@@ -1,5 +1,7 @@
 package com.ceiba.modelo.objetovalor;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +28,9 @@ public class DiasFestivos {
     private final static Date DIA_DE_NAVIDAD = new Date("25/12/2021");
 
 
+    public DiasFestivos(){
+    }
+
     public static List<Date> listarDiasFestivos(){
         List<Date> diasFestivos = new ArrayList<>();
             diasFestivos.add(DIA_DE_SAN_JOSE);
@@ -48,5 +53,10 @@ public class DiasFestivos {
             diasFestivos.add(DIA_DE_NAVIDAD);
 
      return diasFestivos;
+    }
+
+    public static Date changeLocalDataTimeForDate(LocalDateTime localDateTime){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyyy");
+        return  new Date(localDateTime.format(formatter));
     }
 }

@@ -4,9 +4,9 @@ import com.ceiba.infraestructura.jdbc.MapperResult;
 import com.ceiba.modelo.dto.solicitud.DtoSolicitud;
 import org.springframework.jdbc.core.RowMapper;
 
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 
 public class MapeoSolicitud implements RowMapper<DtoSolicitud>, MapperResult {
 
@@ -15,7 +15,7 @@ public class MapeoSolicitud implements RowMapper<DtoSolicitud>, MapperResult {
 
         Long idFuncionario = resultSet.getLong("idFuncionario");
         Long numSolicitud = resultSet.getLong("numSolicitud");
-        Date fechaSolicitud = resultSet.getDate("fechaSolicitud");
+        LocalDateTime fechaSolicitud = extraerLocalDateTime(resultSet,"fechaSolicitud");
         String justificacion = resultSet.getString("justificacion");
         String estado = resultSet.getString("estado");
         String respuesta = resultSet.getString("respuesta");

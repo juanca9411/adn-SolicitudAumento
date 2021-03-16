@@ -2,14 +2,16 @@ package com.ceiba.solicitud.testdatabuilder;
 
 
 import com.ceiba.modelo.entidad.solicitud.Solicitud;
+import org.mockito.cglib.core.Local;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class SolicitudTestDataBuilder {
 
     private Long idFuncionario;
     private Long numSolicitud;
-    private Date fechaSolicitud;
+    private LocalDateTime fechaSolicitud;
     private String justificacion;
     private String estado;
     private String respuesta;
@@ -17,7 +19,7 @@ public class SolicitudTestDataBuilder {
     public SolicitudTestDataBuilder() {
         idFuncionario = 1L;
         numSolicitud = 1L;
-        fechaSolicitud = new Date();
+        fechaSolicitud = LocalDateTime.now();
         justificacion = "Solicito aumento";
         estado = "enviado";
         respuesta = "";
@@ -33,7 +35,7 @@ public class SolicitudTestDataBuilder {
         return this;
     }
 
-    public SolicitudTestDataBuilder conFechSolicitud(Date fechaSolicitud) {
+    public SolicitudTestDataBuilder conFechSolicitud(LocalDateTime fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
         return this;
     }

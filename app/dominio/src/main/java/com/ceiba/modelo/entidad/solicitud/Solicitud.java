@@ -7,8 +7,8 @@ import com.ceiba.modelo.objetovalor.Dias;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Locale;
 
 import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
+import static com.ceiba.modelo.objetovalor.DiasFestivos.changeLocalDataTimeForDate;
 import static com.ceiba.modelo.objetovalor.DiasFestivos.listarDiasFestivos;
 
 
@@ -33,12 +34,12 @@ public class Solicitud {
 
     private Long idFuncionario;
     private Long numSolicitud;
-    private Date fechaSolicitud;
+    private LocalDateTime fechaSolicitud;
     private String justificacion;
     private String estado;
     private String respuesta;
 
-    public Solicitud(Long idFuncionario, Long numSolicitud, Date fechaSolicitud, String justificacion, String estado, String respuesta) {
+    public Solicitud(Long idFuncionario, Long numSolicitud, LocalDateTime fechaSolicitud, String justificacion, String estado, String respuesta) {
 
         validarObligatorio(idFuncionario, SE_DEBE_INGRESAR_ID_FUNCIONARIO);
         validarObligatorio(fechaSolicitud, SE_DEBE_FECHA_DE_SOLICITUD);
@@ -54,31 +55,28 @@ public class Solicitud {
         this.respuesta=respuesta;
     }
 
-    public static void validarSolicitudFindeSemana(Date fechaSolicitud){
+    public static void validarSolicitudFindeSemana(LocalDateTime fechaSolicitud){
         Locale espanol = new Locale("es","ES");
-        SimpleDateFormat formatter = new SimpleDateFormat("EEEE", espanol);
-        String fechaTexto = formatter.format(fechaSolicitud);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE",espanol);
+        String fechaTexto =  fechaSolicitud.format(formatter);
         if (fechaTexto.equals(Dias.sábado.toString())||fechaTexto.equals(Dias.domingo.toString())){
             throw new ExepcionSolicitudFinDeSemana(LA_SOLICITUD_NO_PUEDE_SER_UN_FIN_DE_SEMANA);
         }
     }
 
-    public  static void validarSolicitudDiaFestivo(Date fechaSolicitud){
+    public  static void validarSolicitudDiaFestivo(LocalDateTime fechaSolicitud){
         List<Date> listDiasFestivos = listarDiasFestivos();
-        listDiasFestivos.forEach(list ->{
-            if (list.compareTo(fechaSolicitud)==0){
+            if (listDiasFestivos.contains(changeLocalDataTimeForDate(fechaSolicitud))) {
                 throw new ExepcioSolicitudDiaNoHabil(SOLO_SE_PUEDE_REALIZAR_SOLICITUDES_EN_DIAS_HABILES);
             }
-        });
     }
 
-    public static void validarNuevaSolicitud(Date fechaUltimaSolicitud, Date fechaSolicitud){
+    public static void validarNuevaSolicitud(LocalDateTime fechaUltimaSolicitud, LocalDateTime fechaSolicitud){
 
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        String fechaTexto = formatter.format(fechaUltimaSolicitud);
-        String fechaTexto2 = formatter.format(fechaSolicitud);
+        String fechaTexto = fechaUltimaSolicitud.format(fmt);
+        String fechaTexto2 = fechaSolicitud.format(fmt);
 
         LocalDate ultimaSolicitud = LocalDate.parse(fechaTexto, fmt);
         LocalDate nuevaSolicitud = LocalDate.parse(fechaTexto2, fmt);

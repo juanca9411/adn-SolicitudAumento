@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -15,7 +15,7 @@ public class ComandoSolicitud {
 
     private Long idFuncionario;
     private Long numSolicitud;
-    private Date fechaSolicitud;
+    private LocalDateTime fechaSolicitud;
     private String justificacion;
     private String estado;
     private String respuesta;

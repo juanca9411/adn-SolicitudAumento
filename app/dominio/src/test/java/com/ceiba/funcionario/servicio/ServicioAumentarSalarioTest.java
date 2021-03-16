@@ -9,7 +9,7 @@ import com.ceiba.servicio.funcionario.ServicioAumentarSalario;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static com.ceiba.modelo.entidad.funcionario.Funcionario.aumentarSalario;
 import static com.ceiba.props.funcionario.ConstatesFuncionario.PORCENTAJE_AUMENTO_SALARIO;
@@ -24,7 +24,7 @@ public class ServicioAumentarSalarioTest {
     public void validarAntiguedadFuncionarioErrado(){
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
-                .conFechaIngreso(new Date("January 17, 2020 03:24:00"))
+                .conFechaIngreso(LocalDateTime.of(2020,1,17,3,24))
                 .build();
         ServicioAumentarSalario servicioAumentarSalario = new ServicioAumentarSalario(this.repositorioFuncionario);
 
@@ -37,7 +37,7 @@ public class ServicioAumentarSalarioTest {
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
                 .conSalario(2000000.0)
-                .conFechaIngreso(new Date("January 17, 2019 03:24:00"))
+                .conFechaIngreso(LocalDateTime.of(2019,1,17,3,25))
                 .build();
         ServicioAumentarSalario servicioAumentarSalario = new ServicioAumentarSalario(this.repositorioFuncionario);
 
@@ -50,16 +50,12 @@ public class ServicioAumentarSalarioTest {
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
                 .conSalario(1700000.0)
-                .conFechaIngreso(new Date("January 17, 2016 03:24:00"))
+                .conFechaIngreso(LocalDateTime.of(2016,1,17,3,25))
                 .build();
         // act
         double resultado = aumentarSalario(funcionario.getFechaIngreso(),funcionario.getSalario());
 
         // assert
-        Assert.assertTrue(resultado==
-                (funcionario.getSalario()*(PORCENTAJE_AUMENTO_SALARIO/100D)+funcionario.getSalario()));
+        Assert.assertTrue(resultado==(funcionario.getSalario()*(PORCENTAJE_AUMENTO_SALARIO/100D)+funcionario.getSalario()));
     }
-
-
-
 }

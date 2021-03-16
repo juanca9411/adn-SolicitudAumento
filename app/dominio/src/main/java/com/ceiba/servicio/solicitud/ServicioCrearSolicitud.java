@@ -5,7 +5,7 @@ import com.ceiba.modelo.entidad.solicitud.Solicitud;
 import com.ceiba.puerto.repositorio.solicitud.RepositorioSolicitud;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static com.ceiba.modelo.entidad.solicitud.Solicitud.*;
 
@@ -36,7 +36,7 @@ public class ServicioCrearSolicitud {
     }
 
      private void validaNuevaSolicitud(Solicitud solicitud){
-        Date fechaUltimaSolicitud = this.repositorioSolicitud.getMaxFechaSolicitud(solicitud.getIdFuncionario());
+        LocalDateTime fechaUltimaSolicitud = this.repositorioSolicitud.getMaxFechaSolicitud(solicitud.getIdFuncionario());
          validarNuevaSolicitud(fechaUltimaSolicitud,solicitud.getFechaSolicitud());
     }
 

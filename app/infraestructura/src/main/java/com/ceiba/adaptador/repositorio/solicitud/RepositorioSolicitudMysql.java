@@ -9,7 +9,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Repository
 public class RepositorioSolicitudMysql implements RepositorioSolicitud {
@@ -47,10 +47,10 @@ public class RepositorioSolicitudMysql implements RepositorioSolicitud {
     }
 
     @Override
-    public Date getMaxFechaSolicitud(Long idFuncionario) {
+    public LocalDateTime getMaxFechaSolicitud(Long idFuncionario) {
         MapSqlParameterSource parameterSource = new MapSqlParameterSource();
         parameterSource.addValue("idFuncionario",idFuncionario);
-        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlGetMaxFechaSolicitud,parameterSource, Date.class) ;
+        return this.customNamedParameterJdbcTemplate.getNamedParameterJdbcTemplate().queryForObject(sqlGetMaxFechaSolicitud,parameterSource, LocalDateTime.class) ;
 
     }
 
