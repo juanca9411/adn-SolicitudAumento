@@ -26,9 +26,11 @@ pipeline {
         branches: [[name: '*/master']], 
         extensions: [],
         gitTool: 'Default',
-        userRemoteConfigs: [[credentialsId: 'GITHUB_juanca9411', url: 'https://github.com/juanca9411/adn.git']]])
+        submoduleCfg: [],
+        userRemoteConfigs: [[credentialsId: 'GITHUB_juanca9411', url: 'https://github.com/juanca9411/adn-SolicitudAumento.git']]])
+        
+        sh 'gradle --b ./app/build.gradle clean'
       }
-      sh 'gradle --b ./app/build.gradle clean'
     }
     
     stage('Compile & Unit Tests') {
