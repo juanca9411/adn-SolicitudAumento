@@ -2,10 +2,8 @@ package com.ceiba.solicitud.testdatabuilder;
 
 
 import com.ceiba.modelo.entidad.solicitud.Solicitud;
-import org.mockito.cglib.core.Local;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public class SolicitudTestDataBuilder {
 

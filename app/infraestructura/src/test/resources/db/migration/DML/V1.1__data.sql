@@ -2,3 +2,5 @@ insert into funcionario(nombre,cedula,salario,fechaNacimiento,fechaIngreso) valu
 
 insert into solicitud (idFuncionario, fechaSolicitud, justificacion, estado, respuesta)
 values(1,'2020-01-01','Solicito un aumento de salario por el tiempo que llevo en la empresa','enviado','');
+
+INSERT INTO dia_festivo (`codigoFecha`,`dia`,`fecha`) VALUES (1,'Dia de San jose','2021-03-22');

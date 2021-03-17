@@ -30,6 +30,7 @@ public class Funcionario {
     private static final String NO_CUMPLE_CON_EL_TIEMPO_MINIMO_DE_ANTIGUEDAD = "Debe tener como minimo 2 años de antiguedad";
     private static final String FUNCIONARIO_SUPERA_LA_CANTIDAD_DE_SALARIOS_MINIMOS_REQUISITOS_PARA_AUMENTO = "El funcionario supera la cantidad de " +
             "salarios minimos requisitos para el aumento";
+    private static final String FORMATO_DD_MM_YYYY="dd/MM/yyyy";
 
     private Long idFuncionario;
     private String nombre;
@@ -61,7 +62,7 @@ public class Funcionario {
     }
 
     public static void validarFuncionarioMayorDeEdad (LocalDateTime date){
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(FORMATO_DD_MM_YYYY);
         String fechaTexto = date.format(fmt);
         LocalDate fechaNac = LocalDate.parse(fechaTexto, fmt);
         LocalDate currentDate = LocalDate.now();
@@ -72,7 +73,7 @@ public class Funcionario {
     }
 
     public static void validarAntiguedadFuncionario(LocalDateTime fechaIngreso){
-        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern(FORMATO_DD_MM_YYYY);
         String fechaTexto = fechaIngreso.format(fmt);
         LocalDate fechaNac = LocalDate.parse(fechaTexto, fmt);
         LocalDate currentDate = LocalDate.now();

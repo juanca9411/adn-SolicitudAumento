@@ -18,3 +18,10 @@ create table solicitud (
  respuesta VARCHAR(200),
  primary key (numSolicitud)
 );
+
+create table dia_festivo (
+codigoFecha int(11) not null auto_increment,
+dia VARCHAR(200),
+fecha DATE,
+primary key (codigoFecha)
+)

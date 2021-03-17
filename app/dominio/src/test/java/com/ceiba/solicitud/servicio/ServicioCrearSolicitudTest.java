@@ -2,9 +2,11 @@ package com.ceiba.solicitud.servicio;
 
 
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
+import com.ceiba.exepcion.ExepcioSolicitudDiaNoHabil;
 import com.ceiba.exepcion.ExepcionSolicitudFinDeSemana;
 import com.ceiba.exepcion.ExepcionSolicitudesNoVigente;
 import com.ceiba.modelo.entidad.solicitud.Solicitud;
+import com.ceiba.puerto.repositorio.calendario.RepositorioDiaFestivo;
 import com.ceiba.puerto.repositorio.solicitud.RepositorioSolicitud;
 import com.ceiba.servicio.solicitud.ServicioCrearSolicitud;
 import com.ceiba.solicitud.testdatabuilder.SolicitudTestDataBuilder;
@@ -17,14 +19,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 
-import static com.ceiba.modelo.objetovalor.DiasFestivos.changeLocalDataTimeForDate;
-import static com.ceiba.modelo.objetovalor.DiasFestivos.listarDiasFestivos;
-
 @RunWith(MockitoJUnitRunner.class)
 public class ServicioCrearSolicitudTest {
 
     @Mock
     RepositorioSolicitud repositorioSolicitud;
+    @Mock
+    RepositorioDiaFestivo repositorioDiaFestivo;
 
     @Test(expected = ExcepcionDuplicidad.class)
     public void validarExistenciaSolcitudTest() {
@@ -33,7 +34,7 @@ public class ServicioCrearSolicitudTest {
                 .conNumSolicitud(1L)
                 .build();
         Mockito.when(this.repositorioSolicitud.existe(1L)).thenReturn(true);
-        ServicioCrearSolicitud servicioCrearSolicitud = new ServicioCrearSolicitud(this.repositorioSolicitud);
+        ServicioCrearSolicitud servicioCrearSolicitud = new ServicioCrearSolicitud(this.repositorioSolicitud, this.repositorioDiaFestivo);
 
         //act-assert
         servicioCrearSolicitud.ejecutar(solicitud);
@@ -44,25 +45,28 @@ public class ServicioCrearSolicitudTest {
         public void validarNuevaSolicitud(){
             //arrange
             Solicitud solicitud = new SolicitudTestDataBuilder()
-                    .conFechSolicitud(LocalDateTime.of(2020,12,17,3,25))//(new Date("December 17, 2020 03:24:00"))
+                    .conIdFuncionario(1L)
+                    .conFechSolicitud(LocalDateTime.of(2020,12,17,3,25))
                     .build();
-            Mockito.when(this.repositorioSolicitud.getMaxFechaSolicitud(1L)).thenReturn(LocalDateTime.of(2020,12,17,3,5));//(new Date("December 17, 2020 03:24:00"));
-            ServicioCrearSolicitud servicioCrearSolicitud = new ServicioCrearSolicitud(this.repositorioSolicitud);
+            Mockito.when(this.repositorioSolicitud.getMaxFechaSolicitud(1L)).thenReturn(LocalDateTime.of(2020,12,17,3,5));
+            ServicioCrearSolicitud servicioCrearSolicitud = new ServicioCrearSolicitud(this.repositorioSolicitud, this.repositorioDiaFestivo);
             //act-assert
             servicioCrearSolicitud.ejecutar(solicitud);
 
         }
 
-        @Test
+        @Test(expected = ExepcioSolicitudDiaNoHabil.class)
         public void validarSolicitudDiaFestivo(){
         // arrange
          Solicitud solicitud = new SolicitudTestDataBuilder()
-                    .conFechSolicitud(LocalDateTime.of(2021,3,15,3,5))
+                    .conIdFuncionario(1L)
+                    .conFechSolicitud(LocalDateTime.of(2021,3,22,3,25))
                     .build();
-         //act
-            boolean resultado = (listarDiasFestivos().contains(changeLocalDataTimeForDate(solicitud.getFechaSolicitud())));
-        // assert
-            Assert.assertEquals(false,resultado);
+            Mockito.when(this.repositorioDiaFestivo.esFestivo(LocalDateTime.of(2021,3,22,3,25))).thenReturn(true);
+            ServicioCrearSolicitud servicioCrearSolicitud = new ServicioCrearSolicitud(this.repositorioSolicitud, this.repositorioDiaFestivo);
+         //act-assert
+            servicioCrearSolicitud.ejecutar(solicitud);
+
         }
 
     @Test(expected = ExepcionSolicitudFinDeSemana.class)
