@@ -1,6 +1,5 @@
 package com.ceiba.servicio.funcionario;
 
-import static com.ceiba.modelo.entidad.funcionario.Funcionario.validarFuncionarioMayorDeEdad;
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
 import com.ceiba.modelo.entidad.funcionario.Funcionario;
 import com.ceiba.puerto.repositorio.funcionario.RepositorioFuncionario;
@@ -19,7 +18,7 @@ public class ServicioCrearFuncionario {
     }
 
     public Long ejecutar(Funcionario funcionario) {
-        validarFuncionarioMayorDeEdad(funcionario.getFechaNacimiento());
+        funcionario.validarFuncionarioMayorDeEdad();
         validarExistenciaPrevia(funcionario);
         return this.repositorioFuncionario.crear(funcionario);
     }

@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,18 +31,21 @@ public class ConsultaControladorSolicitudTest {
         // act - assert
         mocMvc.perform(get("/solicitudes")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.numSolicitud === 1)]").exists())
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     public void getDetalle() throws  Exception{
         // arrange
-        Long idFuncionario=1l;
+        Long idFuncionario=1L;
         // act -assert
         mocMvc.perform(get("/solicitudes/{idFuncionario}",idFuncionario)
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$[?(@.idFuncionario === 1)]").exists());
+        .andExpect(jsonPath("$[?(@.idFuncionario === 1)]").exists())
+                .andDo(MockMvcResultHandlers.print());
 
     }
 

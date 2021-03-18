@@ -13,8 +13,7 @@ public class ServicioAumentarSalario {
     }
 
     public void ejecutar(Funcionario funcionario){
-        Double salarioIncrementado=aumentarSalario(funcionario.getFechaIngreso(),funcionario.getSalario());
-        funcionario.setSalario(salarioIncrementado);
+        funcionario.aumentarSalario();
         this.repositorioFuncionario.actualizarIncrementoSalario(funcionario);
     }
 

@@ -8,11 +8,15 @@ import com.ceiba.puerto.repositorio.calendario.RepositorioDiaFestivo;
 import com.ceiba.servicio.calendario.ServicioAgregarDiaFestivo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
+
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ServicioAgregarDiaFestivoTest {
@@ -24,13 +28,11 @@ public class ServicioAgregarDiaFestivoTest {
     public void validarRegistroDiaFestivoTest() {
         //arrange
         DiaFestivo diaFestivo = new DiaFestivoTestDataBuilder()
-                .conFecha(LocalDateTime.of(2021,3,22,3,5))
+                .conFecha(LocalDateTime.of(2021, 3, 22, 3, 5))
                 .build();
-        Mockito.when(this.repositorioDiaFestivo.esFestivo(LocalDateTime.of(2021,3,22,3,5))).thenReturn(true);
+        Mockito.when(this.repositorioDiaFestivo.esFestivo(LocalDateTime.of(2021, 3, 22, 3, 5))).thenReturn(true);
         ServicioAgregarDiaFestivo servicioAgregarDiaFestivo = new ServicioAgregarDiaFestivo(this.repositorioDiaFestivo);
         //act-assert
         servicioAgregarDiaFestivo.ejecutar(diaFestivo);
-
-        }
-
+    }
 }

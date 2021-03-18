@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import static com.ceiba.dominio.ValidadorArgumento.validarObligatorio;
-import static com.ceiba.props.funcionario.ConstatesFuncionario.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +20,13 @@ import java.time.format.DateTimeFormatter;
 @Setter
 public class Funcionario {
 
+    private static final String FORMATO_DD_MM_YYYY="dd/MM/yyyy";
+    public static final  Double SALARIO_MINIMO_LEGAL_VIGENTE = 908526.00;
+    public static final  int PORCENTAJE_AUMENTO_SALARIO = 10;
+    public static final  int CANTIDAD_SALARIOS_MINIMOS_REQUERIDOS_PARA_AUMENTO =2;
+    public static final int ANTIGUEDAD_MINIMA_REQUERIDA_PARA_AUMENTO_SALARIAL=2;
+    public static final int MAYORIA_DE_EDAD=18;
+    public static final Double CIEN_PORCIENTO=100D;
     private static final String SE_DEBE_INGRESAR_EL_NOMBRE_DEL_FUNCIONARIO = "Se debe ingresar el nombre del funcionario";
     private static final String SE_DEBE_INGRESAR_LA_CEDULA = "Se debe ingresar la cedula";
     private static final String SE_DEBE_INGRESAR_EL_SALARIO = "Se debe ingresar el salario";
@@ -30,7 +36,8 @@ public class Funcionario {
     private static final String NO_CUMPLE_CON_EL_TIEMPO_MINIMO_DE_ANTIGUEDAD = "Debe tener como minimo 2 años de antiguedad";
     private static final String FUNCIONARIO_SUPERA_LA_CANTIDAD_DE_SALARIOS_MINIMOS_REQUISITOS_PARA_AUMENTO = "El funcionario supera la cantidad de " +
             "salarios minimos requisitos para el aumento";
-    private static final String FORMATO_DD_MM_YYYY="dd/MM/yyyy";
+
+
 
     private Long idFuncionario;
     private String nombre;
@@ -55,37 +62,37 @@ public class Funcionario {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public static Double aumentarSalario(LocalDateTime fechaIngreso, Double salario){
-        validarAntiguedadFuncionario(fechaIngreso);
-        validarCantidadSalariosMinimos(salario);
-        return  salario * (PORCENTAJE_AUMENTO_SALARIO/100D) +salario;
+    public Double aumentarSalario(){
+        validarAntiguedadFuncionario();
+        validarCantidadSalariosMinimos();
+        return  this.salario * (PORCENTAJE_AUMENTO_SALARIO/CIEN_PORCIENTO) +this.salario;
     }
 
-    public static void validarFuncionarioMayorDeEdad (LocalDateTime date){
+      public  void validarFuncionarioMayorDeEdad (){
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern(FORMATO_DD_MM_YYYY);
-        String fechaTexto = date.format(fmt);
+        String fechaTexto = this.fechaNacimiento.format(fmt);
         LocalDate fechaNac = LocalDate.parse(fechaTexto, fmt);
         LocalDate currentDate = LocalDate.now();
         Period periodo = Period.between(fechaNac, currentDate);
-        if (periodo.getYears() < 18) {
+        if (periodo.getYears() < MAYORIA_DE_EDAD) {
             throw new ExepcionPersonaMenorDeEdad(EL_FUNCIONARIO_DEBE_SER_MAYOR_DE_EDAD);
         }
     }
 
-    public static void validarAntiguedadFuncionario(LocalDateTime fechaIngreso){
+    private void validarAntiguedadFuncionario(){
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern(FORMATO_DD_MM_YYYY);
-        String fechaTexto = fechaIngreso.format(fmt);
+        String fechaTexto = this.fechaIngreso.format(fmt);
         LocalDate fechaNac = LocalDate.parse(fechaTexto, fmt);
         LocalDate currentDate = LocalDate.now();
         Period periodo = Period.between(fechaNac, currentDate);
-        if (periodo.getYears() < 2) {
+        if (periodo.getYears() < ANTIGUEDAD_MINIMA_REQUERIDA_PARA_AUMENTO_SALARIAL) {
             throw new ExepcionAntiguedadFuncionarioRequerida(NO_CUMPLE_CON_EL_TIEMPO_MINIMO_DE_ANTIGUEDAD);
         }
     }
 
-    public static void validarCantidadSalariosMinimos(Double salario){
+    private  void validarCantidadSalariosMinimos(){
         var salarioMinimoRequisito = SALARIO_MINIMO_LEGAL_VIGENTE*CANTIDAD_SALARIOS_MINIMOS_REQUERIDOS_PARA_AUMENTO;
-        if (salario>salarioMinimoRequisito){
+        if (this.salario>salarioMinimoRequisito){
         throw new ExepcionCantidadDeSalariosMinimo(FUNCIONARIO_SUPERA_LA_CANTIDAD_DE_SALARIOS_MINIMOS_REQUISITOS_PARA_AUMENTO);
         }
 

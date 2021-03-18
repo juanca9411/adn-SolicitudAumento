@@ -13,11 +13,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
 import java.time.LocalDateTime;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -43,19 +45,25 @@ public class ComandoControladorSolicitudTest {
         mocMvc.perform(post("/solicitudes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(solicitud)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[?(@.valor === 2)]").exists())
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     public void resolver() throws  Exception{
         //arragne
-        ComandoSolicitud solicitud = new ComandoSolicitudTestDataBuilder().build();
+        ComandoSolicitud solicitud = new ComandoSolicitudTestDataBuilder()
+                .conEstado("aprobado")
+                .conRespuesta("Se realizo el aumento de salario con exito")
+                .build();
         Long idFuncionario=1L;
         //act-assert
         mocMvc.perform(put("/solicitudes/{idFuncionario}",idFuncionario)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(solicitud)))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 
 

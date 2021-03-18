@@ -8,23 +8,27 @@ import com.ceiba.puerto.repositorio.funcionario.RepositorioFuncionario;
 import com.ceiba.servicio.funcionario.ServicioAumentarSalario;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 
-import static com.ceiba.modelo.entidad.funcionario.Funcionario.aumentarSalario;
-import static com.ceiba.props.funcionario.ConstatesFuncionario.PORCENTAJE_AUMENTO_SALARIO;
+import static com.ceiba.modelo.entidad.funcionario.Funcionario.CIEN_PORCIENTO;
+import static com.ceiba.modelo.entidad.funcionario.Funcionario.PORCENTAJE_AUMENTO_SALARIO;
 
 
+@RunWith(MockitoJUnitRunner.class)
 public class ServicioAumentarSalarioTest {
 
-
+    @Mock
     RepositorioFuncionario repositorioFuncionario;
 
     @Test(expected = ExepcionAntiguedadFuncionarioRequerida.class)
     public void validarAntiguedadFuncionarioErrado(){
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
-                .conFechaIngreso(LocalDateTime.of(2020,1,17,3,24))
+                .conFechaIngreso(LocalDateTime.of(2021,1,17,3,24))
                 .build();
         ServicioAumentarSalario servicioAumentarSalario = new ServicioAumentarSalario(this.repositorioFuncionario);
 
@@ -53,9 +57,9 @@ public class ServicioAumentarSalarioTest {
                 .conFechaIngreso(LocalDateTime.of(2016,1,17,3,25))
                 .build();
         // act
-        double resultado = aumentarSalario(funcionario.getFechaIngreso(),funcionario.getSalario());
+        double resultado = funcionario.aumentarSalario();
 
         // assert
-        Assert.assertTrue(resultado==(funcionario.getSalario()*(PORCENTAJE_AUMENTO_SALARIO/100D)+funcionario.getSalario()));
+        Assert.assertEquals(resultado,(funcionario.getSalario()*(PORCENTAJE_AUMENTO_SALARIO/CIEN_PORCIENTO)+funcionario.getSalario()),0.0);
     }
 }

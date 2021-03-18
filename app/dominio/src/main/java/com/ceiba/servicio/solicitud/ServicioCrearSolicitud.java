@@ -9,25 +9,22 @@ import com.ceiba.puerto.repositorio.solicitud.RepositorioSolicitud;
 
 import java.time.LocalDateTime;
 
-import static com.ceiba.modelo.entidad.solicitud.Solicitud.*;
-
-
 public class ServicioCrearSolicitud {
 
     private static final String LA_SOLICITUD_YA_EXISTE_EN_EL_SISTEMA = "La solicitud ya existe en el sistema";
-    private static final String SOLO_SE_PUEDE_REALIZAR_SOLICITUDES_EN_DIAS_HABILES="Solo se pueden realizar solicitudes en dias habiles";
+    private static final String SOLO_SE_PUEDE_REALIZAR_SOLICITUDES_EN_DIAS_HABILES = "Solo se pueden realizar solicitudes en dias habiles";
 
     private final RepositorioSolicitud repositorioSolicitud;
     private final RepositorioDiaFestivo repositorioDiaFestivo;
 
     public ServicioCrearSolicitud(RepositorioSolicitud repositorioSolicitud, RepositorioDiaFestivo repositorioDiaFestivo) {
-        this.repositorioSolicitud=repositorioSolicitud;
+        this.repositorioSolicitud = repositorioSolicitud;
         this.repositorioDiaFestivo = repositorioDiaFestivo;
     }
 
     public Long ejecutar(Solicitud solicitud) {
         validarExistenciaPrevia(solicitud);
-        validarSolicitudFindeSemana(solicitud.getFechaSolicitud());
+        solicitud.validarSolicitudFindeSemana();
         validarSolicitudDiaFestivo(solicitud.getFechaSolicitud());
         validaNuevaSolicitud(solicitud);
         return this.repositorioSolicitud.crear(solicitud);
@@ -35,20 +32,20 @@ public class ServicioCrearSolicitud {
 
     private void validarExistenciaPrevia(Solicitud solicitud) {
         boolean existe = this.repositorioSolicitud.existe(solicitud.getNumSolicitud());
-        if(existe) {
+        if (existe) {
             throw new ExcepcionDuplicidad(LA_SOLICITUD_YA_EXISTE_EN_EL_SISTEMA);
         }
     }
 
-     private void validaNuevaSolicitud(Solicitud solicitud){
+    private void validaNuevaSolicitud(Solicitud solicitud) {
         LocalDateTime fechaUltimaSolicitud = this.repositorioSolicitud.getMaxFechaSolicitud(solicitud.getIdFuncionario());
-         validarTiempoMinimoNuevaSolicitud(fechaUltimaSolicitud,solicitud.getFechaSolicitud());
+        solicitud.validarTiempoMinimoNuevaSolicitud(fechaUltimaSolicitud);
     }
 
-    private void validarSolicitudDiaFestivo(LocalDateTime fecha){
-        if(this.repositorioDiaFestivo.esFestivo(fecha)){
+    private void validarSolicitudDiaFestivo(LocalDateTime fechaSolicitud) {
+        if (this.repositorioDiaFestivo.esFestivo(fechaSolicitud)) {
             throw new ExepcioSolicitudDiaNoHabil(SOLO_SE_PUEDE_REALIZAR_SOLICITUDES_EN_DIAS_HABILES);
         }
     }
 
-    }
+}
