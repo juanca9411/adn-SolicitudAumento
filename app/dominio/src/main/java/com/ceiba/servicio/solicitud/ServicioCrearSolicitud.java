@@ -39,6 +39,7 @@ public class ServicioCrearSolicitud {
 
     private void validaNuevaSolicitud(Solicitud solicitud) {
         LocalDateTime fechaUltimaSolicitud = this.repositorioSolicitud.getMaxFechaSolicitud(solicitud.getIdFuncionario());
+       if (fechaUltimaSolicitud != null)
         solicitud.validarTiempoMinimoNuevaSolicitud(fechaUltimaSolicitud);
     }
 

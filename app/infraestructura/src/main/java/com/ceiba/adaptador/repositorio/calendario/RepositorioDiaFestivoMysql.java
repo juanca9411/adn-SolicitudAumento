@@ -15,7 +15,7 @@ public class RepositorioDiaFestivoMysql implements RepositorioDiaFestivo {
 
     private static String sqlCrear="insert into dia_festivo (dia, fecha) values (:dia,:fecha)";
 
-    private static String sqlExisteByFecha="select count (*) from dia_festivo where fecha= :fecha";
+    private static String sqlExisteByFecha="select count(*) from dia_festivo where fecha= :fecha";
 
 
     public RepositorioDiaFestivoMysql(CustomNamedParameterJdbcTemplate customNamedParameterJdbcTemplate) {

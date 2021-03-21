@@ -62,10 +62,10 @@ public class Funcionario {
         this.fechaIngreso = fechaIngreso;
     }
 
-    public Double aumentarSalario(){
+    public void aumentarSalario(){
         validarAntiguedadFuncionario();
         validarCantidadSalariosMinimos();
-        return  this.salario * (PORCENTAJE_AUMENTO_SALARIO/CIEN_PORCIENTO) +this.salario;
+        this.salario =  (this.salario * (PORCENTAJE_AUMENTO_SALARIO/CIEN_PORCIENTO) +this.salario);
     }
 
       public  void validarFuncionarioMayorDeEdad (){

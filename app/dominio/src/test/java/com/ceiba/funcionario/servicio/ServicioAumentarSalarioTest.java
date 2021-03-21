@@ -49,17 +49,18 @@ public class ServicioAumentarSalarioTest {
         servicioAumentarSalario.ejecutar(funcionario);
     }
 
-    @Test
-    public void validarAumentarSalario(){
+     @Test
+   public void validarAumentarSalario(){
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
                 .conSalario(1700000.0)
                 .conFechaIngreso(LocalDateTime.of(2016,1,17,3,25))
                 .build();
-        // act
-        double resultado = funcionario.aumentarSalario();
 
+        double salarioOld = funcionario.getSalario();
+        // act
+               funcionario.aumentarSalario();
         // assert
-        Assert.assertEquals(resultado,(funcionario.getSalario()*(PORCENTAJE_AUMENTO_SALARIO/CIEN_PORCIENTO)+funcionario.getSalario()),0.0);
+        Assert.assertEquals(funcionario.getSalario(),(salarioOld*(PORCENTAJE_AUMENTO_SALARIO/CIEN_PORCIENTO)+salarioOld),0.0);
     }
 }

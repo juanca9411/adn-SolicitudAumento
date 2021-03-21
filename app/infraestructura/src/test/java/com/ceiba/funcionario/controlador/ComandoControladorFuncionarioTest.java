@@ -22,6 +22,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 
+import java.time.LocalDateTime;
+
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes= ApplicationMock.class)
 @WebMvcTest(ComandoControladorFuncionario.class)

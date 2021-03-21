@@ -5,6 +5,7 @@ import com.ceiba.comando.manejador.calendario.ManejadorAgregarDiaFestivo;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/dias-festivos")
 @Api(tags = { "Controlador comando dias festivos"})
