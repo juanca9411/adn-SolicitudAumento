@@ -1,7 +1,7 @@
 package com.ceiba.servicio.funcionario;
 
 
-import com.ceiba.exepcion.ExepcionNoExiste;
+import com.ceiba.dominio.excepcion.ExepcionNoExiste;
 import com.ceiba.modelo.entidad.funcionario.Funcionario;
 import com.ceiba.puerto.repositorio.funcionario.RepositorioFuncionario;
 

@@ -59,7 +59,7 @@ public class ComandoControladorSolicitudTest {
                 .build();
         Long idFuncionario=1L;
         //act-assert
-        mocMvc.perform(put("/solicitudes/{idFuncionario}",idFuncionario)
+        mocMvc.perform(put("/solicitudes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(solicitud)))
                 .andExpect(status().isOk())

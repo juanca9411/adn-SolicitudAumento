@@ -1,7 +1,7 @@
 package com.ceiba.servicio.solicitud;
 
 import com.ceiba.dominio.excepcion.ExcepcionDuplicidad;
-import com.ceiba.exepcion.ExepcioSolicitudDiaNoHabil;
+import com.ceiba.dominio.excepcion.ExepcioSolicitudDiaNoHabil;
 import com.ceiba.modelo.entidad.solicitud.Solicitud;
 import com.ceiba.puerto.repositorio.calendario.RepositorioDiaFestivo;
 import com.ceiba.puerto.repositorio.solicitud.RepositorioSolicitud;

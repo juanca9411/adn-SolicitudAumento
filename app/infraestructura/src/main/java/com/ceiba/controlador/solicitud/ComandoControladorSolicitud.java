@@ -8,7 +8,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @RequestMapping("/solicitudes")
 @Api(tags = { "Controlador comando solicitudes"})
@@ -29,11 +28,10 @@ public class ComandoControladorSolicitud {
         return manejadorCrearSolicitud.ejecutar(comandoSolicitud);
     }
 
-    
-	@PutMapping(value="/{idFuncionario}")
+
+    @PutMapping
 	@ApiOperation("Resolver solicitud")
-	public void actualizar(@RequestBody ComandoSolicitud comandoSolicitud,@PathVariable Long idFuncionario) {
-        comandoSolicitud.setIdFuncionario(idFuncionario);
+	public void actualizar(@RequestBody ComandoSolicitud comandoSolicitud) {
         manejadorResolverSolicitud.ejecutar(comandoSolicitud);
 	}
 }

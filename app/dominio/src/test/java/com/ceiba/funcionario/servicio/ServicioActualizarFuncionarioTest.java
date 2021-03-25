@@ -1,6 +1,7 @@
 package com.ceiba.funcionario.servicio;
 
-import com.ceiba.exepcion.ExepcionNoExiste;
+import com.ceiba.BasePrueba;
+import com.ceiba.dominio.excepcion.ExepcionNoExiste;
 import com.ceiba.funcionario.controlador.testdatabuilder.FuncionarioTestDataBuilder;
 import com.ceiba.modelo.entidad.funcionario.Funcionario;
 import com.ceiba.puerto.repositorio.funcionario.RepositorioFuncionario;
@@ -17,7 +18,7 @@ public class ServicioActualizarFuncionarioTest {
     @Mock
     RepositorioFuncionario repositorioFuncionario;
 
-    @Test(expected = ExepcionNoExiste.class)
+    @Test
     public void validarExistenciaFuncionarioTest() {
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
@@ -26,7 +27,7 @@ public class ServicioActualizarFuncionarioTest {
         Mockito.when(this.repositorioFuncionario.existe("10509653")).thenReturn(true);
         ServicioActualizarFuncionario servicioActualizarFuncionario = new ServicioActualizarFuncionario(this.repositorioFuncionario);
         // act - assert
-        servicioActualizarFuncionario.ejecutar(funcionario);
+        BasePrueba.assertThrows(()-> servicioActualizarFuncionario.ejecutar(funcionario),ExepcionNoExiste.class,"El funcionario no existe en el sistema");
     }
 
 }

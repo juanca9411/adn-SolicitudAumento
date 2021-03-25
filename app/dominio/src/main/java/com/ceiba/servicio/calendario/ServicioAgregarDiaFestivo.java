@@ -1,7 +1,7 @@
 package com.ceiba.servicio.calendario;
 
 
-import com.ceiba.exepcion.ExepcionDiaNoHabil;
+import com.ceiba.dominio.excepcion.ExepcionDiaNoHabil;
 import com.ceiba.modelo.entidad.calendario.DiaFestivo;
 import com.ceiba.puerto.repositorio.calendario.RepositorioDiaFestivo;
 

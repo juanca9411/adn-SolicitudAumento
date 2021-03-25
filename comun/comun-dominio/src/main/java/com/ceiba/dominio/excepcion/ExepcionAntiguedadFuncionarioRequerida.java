@@ -1,4 +1,4 @@
-package com.ceiba.exepcion;
+package com.ceiba.dominio.excepcion;
 
 public class ExepcionAntiguedadFuncionarioRequerida extends RuntimeException{
 

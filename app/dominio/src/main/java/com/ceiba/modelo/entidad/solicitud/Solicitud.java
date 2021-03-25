@@ -1,7 +1,7 @@
 package com.ceiba.modelo.entidad.solicitud;
 
-import com.ceiba.exepcion.ExepcionSolicitudFinDeSemana;
-import com.ceiba.exepcion.ExepcionSolicitudesNoVigente;
+import com.ceiba.dominio.excepcion.ExepcionSolicitudFinDeSemana;
+import com.ceiba.dominio.excepcion.ExepcionSolicitudesNoVigente;
 import com.ceiba.modelo.objetovalor.Dias;
 import lombok.Getter;
 import lombok.Setter;

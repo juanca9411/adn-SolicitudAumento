@@ -1,9 +1,9 @@
 package com.ceiba.modelo.entidad.funcionario;
 
 
-import com.ceiba.exepcion.ExepcionAntiguedadFuncionarioRequerida;
-import com.ceiba.exepcion.ExepcionCantidadDeSalariosMinimo;
-import com.ceiba.exepcion.ExepcionPersonaMenorDeEdad;
+import com.ceiba.dominio.excepcion.ExepcionAntiguedadFuncionarioRequerida;
+import com.ceiba.dominio.excepcion.ExepcionCantidadDeSalariosMinimo;
+import com.ceiba.dominio.excepcion.ExepcionPersonaMenorDeEdad;
 import lombok.Getter;
 import lombok.Setter;
 

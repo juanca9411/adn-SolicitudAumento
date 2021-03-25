@@ -1,8 +1,9 @@
 package com.ceiba.funcionario.servicio;
 
 
+import com.ceiba.BasePrueba;
 import com.ceiba.dominio.excepcion.*;
-import com.ceiba.exepcion.ExepcionPersonaMenorDeEdad;
+import com.ceiba.dominio.excepcion.ExepcionPersonaMenorDeEdad;
 import com.ceiba.funcionario.controlador.testdatabuilder.FuncionarioTestDataBuilder;
 import com.ceiba.modelo.entidad.funcionario.Funcionario;
 import com.ceiba.puerto.repositorio.funcionario.RepositorioFuncionario;
@@ -22,7 +23,7 @@ public class ServicioCrearFuncionarioTest {
     @Mock
     RepositorioFuncionario repositorioFuncionario;
 
-    @Test(expected = ExcepcionDuplicidad.class)
+    @Test
     public void validarExistenciaFuncionarioTest() {
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
@@ -31,10 +32,10 @@ public class ServicioCrearFuncionarioTest {
         Mockito.when(this.repositorioFuncionario.existe("1050965338")).thenReturn(true);
         ServicioCrearFuncionario servicioCrearFuncionario = new ServicioCrearFuncionario(this.repositorioFuncionario);
         // act - assert
-        servicioCrearFuncionario.ejecutar(funcionario);
+        BasePrueba.assertThrows(()-> servicioCrearFuncionario.ejecutar(funcionario),ExcepcionDuplicidad.class,"El funcionario ya existe en el sistema");
     }
 
-    @Test(expected = ExepcionPersonaMenorDeEdad.class)
+    @Test
     public void validarFuncionarioMayorDeEdadErrado(){
 
         // arange
@@ -44,7 +45,7 @@ public class ServicioCrearFuncionarioTest {
         ServicioCrearFuncionario servicioCrearFuncionario = new ServicioCrearFuncionario(this.repositorioFuncionario);
 
         //act-asset
-        servicioCrearFuncionario.ejecutar(funcionario);
+        BasePrueba.assertThrows(()-> servicioCrearFuncionario.ejecutar(funcionario),ExepcionPersonaMenorDeEdad.class,"El funcionario debe ser mayor de edad");
     }
 
 

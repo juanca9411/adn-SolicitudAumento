@@ -16,7 +16,7 @@ public class ValidadorArgumento {
 	private ValidadorArgumento() {}
 
     public static void validarObligatorio(Object valor, String mensaje) {
-        if (valor == null) {
+        if (valor == null || valor.toString().isEmpty()) {
             throw new ExcepcionValorObligatorio(mensaje);
         }
     }

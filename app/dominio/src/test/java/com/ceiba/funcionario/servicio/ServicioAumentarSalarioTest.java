@@ -1,7 +1,8 @@
 package com.ceiba.funcionario.servicio;
 
-import com.ceiba.exepcion.ExepcionAntiguedadFuncionarioRequerida;
-import com.ceiba.exepcion.ExepcionCantidadDeSalariosMinimo;
+import com.ceiba.BasePrueba;
+import com.ceiba.dominio.excepcion.ExepcionAntiguedadFuncionarioRequerida;
+import com.ceiba.dominio.excepcion.ExepcionCantidadDeSalariosMinimo;
 import com.ceiba.funcionario.controlador.testdatabuilder.FuncionarioTestDataBuilder;
 import com.ceiba.modelo.entidad.funcionario.Funcionario;
 import com.ceiba.puerto.repositorio.funcionario.RepositorioFuncionario;
@@ -24,7 +25,7 @@ public class ServicioAumentarSalarioTest {
     @Mock
     RepositorioFuncionario repositorioFuncionario;
 
-    @Test(expected = ExepcionAntiguedadFuncionarioRequerida.class)
+    @Test
     public void validarAntiguedadFuncionarioErrado(){
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
@@ -33,10 +34,10 @@ public class ServicioAumentarSalarioTest {
         ServicioAumentarSalario servicioAumentarSalario = new ServicioAumentarSalario(this.repositorioFuncionario);
 
         // act-assert
-        servicioAumentarSalario.ejecutar(funcionario);
+        BasePrueba.assertThrows(()-> servicioAumentarSalario.ejecutar(funcionario),ExepcionAntiguedadFuncionarioRequerida.class,"Debe tener como minimo 2 años de antiguedad");
     }
 
-    @Test(expected = ExepcionCantidadDeSalariosMinimo.class)
+    @Test
     public void validarCantidadSalariosMinimos(){
         // arrange
         Funcionario funcionario = new FuncionarioTestDataBuilder()
@@ -46,7 +47,7 @@ public class ServicioAumentarSalarioTest {
         ServicioAumentarSalario servicioAumentarSalario = new ServicioAumentarSalario(this.repositorioFuncionario);
 
         // act-assert
-        servicioAumentarSalario.ejecutar(funcionario);
+        BasePrueba.assertThrows(()-> servicioAumentarSalario.ejecutar(funcionario),ExepcionCantidadDeSalariosMinimo.class,"El funcionario supera la cantidad de salarios minimos requisitos para el aumento");
     }
 
      @Test

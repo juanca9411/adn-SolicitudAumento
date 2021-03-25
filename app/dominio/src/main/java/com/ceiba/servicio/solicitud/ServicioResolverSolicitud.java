@@ -1,7 +1,7 @@
 package com.ceiba.servicio.solicitud;
 
 
-import com.ceiba.exepcion.ExepcionNoExiste;
+import com.ceiba.dominio.excepcion.ExepcionNoExiste;
 import com.ceiba.modelo.entidad.solicitud.Solicitud;
 import com.ceiba.puerto.repositorio.solicitud.RepositorioSolicitud;
 
